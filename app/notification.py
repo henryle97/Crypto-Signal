@@ -141,7 +141,7 @@ class Notifier(IndicatorUtils):
 
         self.logger.info("enabled notifers: %s", enabled_notifiers)
 
-    def notify_all(self, new_analysis):
+    def notify_all(self, new_analysis: dict):
         """Trigger a notification for all notification options.
 
         Args:

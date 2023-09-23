@@ -56,9 +56,9 @@ def main():
             )
             behaviour = Behaviour(config, exchange_interface, notifier)
 
-            workerName = "Worker-{}".format(num)
+            worker_name = "Worker-{}".format(num)
             worker = AnalysisWorker(
-                workerName,
+                worker_name,
                 behaviour,
                 notifier,
                 market_data_chunk,
@@ -93,11 +93,17 @@ def chunks(l, n):
 
 class AnalysisWorker(Thread):
     def __init__(
-        self, threadName, behaviour, notifier, market_data, settings, logger
+        self,
+        thread_name: str,
+        behaviour: Behaviour,
+        notifier: Notifier,
+        market_data: dict,
+        settings: dict,
+        logger,
     ):
         Thread.__init__(self)
 
-        self.threadName = threadName
+        self.thread_name = thread_name
         self.behaviour = behaviour
         self.notifier = notifier
         self.market_data = market_data
@@ -106,11 +112,11 @@ class AnalysisWorker(Thread):
 
     def run(self):
         while True:
-            self.logger.info("Starting %s", self.threadName)
+            self.logger.info("Starting %s", self.thread_name)
             self.behaviour.run(self.market_data, self.settings["output_mode"])
             self.logger.info(
                 "%s sleeping for %s seconds",
-                self.threadName,
+                self.thread_name,
                 self.settings["update_interval"],
             )
             time.sleep(self.settings["update_interval"])

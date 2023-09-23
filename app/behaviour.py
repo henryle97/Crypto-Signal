@@ -15,12 +15,19 @@ from analysis import StrategyAnalyzer
 from ccxt import ExchangeError
 from outputs import Output
 from tenacity import RetryError
+from app.notification import Notifier
+from app.exchange import ExchangeInterface
 
 
 class Behaviour:
     """Default analyzer which gives users basic trading information."""
 
-    def __init__(self, config, exchange_interface, notifier):
+    def __init__(
+        self,
+        config: dict,
+        exchange_interface: ExchangeInterface,
+        notifier: Notifier,
+    ):
         """Initializes DefaultBehaviour class.
 
         Args:
@@ -46,7 +53,7 @@ class Behaviour:
         self.enable_charts = config.settings["enable_charts"]
         self.timezone = config.settings["timezone"]
 
-    def run(self, market_data, output_mode):
+    def run(self, market_data: dict, output_mode: str):
         """The analyzer entrypoint
 
         Args:
@@ -72,7 +79,7 @@ class Behaviour:
 
         self.notifier.notify_all(new_result)
 
-    def get_all_historical_data(self, market_data):
+    def get_all_historical_data(self, market_data: str):
         """Get historical data for each exchange/market pair/candle period
 
         Args:
@@ -139,7 +146,7 @@ class Behaviour:
 
         return data
 
-    def _test_strategies(self, market_data, output_mode):
+    def _test_strategies(self, market_data: dict, output_mode: str):
         """Test the strategies and perform notifications as required
 
         Args:
@@ -185,7 +192,7 @@ class Behaviour:
         print()
         return new_result
 
-    def _get_indicator_results(self, exchange, market_pair):
+    def _get_indicator_results(self, exchange: str, market_pair: str):
         """Execute the indicator analysis on a particular exchange and pair.
 
         Args:
@@ -362,7 +369,7 @@ class Behaviour:
                     )
         return results
 
-    def _get_informant_results(self, exchange, market_pair):
+    def _get_informant_results(self, exchange: str, market_pair: str):
         """Execute the informant analysis on a particular exchange and pair.
 
         Args:
@@ -481,7 +488,9 @@ class Behaviour:
                 )
         return results
 
-    def _get_historical_data(self, market_pair, exchange, candle_period):
+    def _get_historical_data(
+        self, market_pair: str, exchange: str, candle_period: str
+    ):
         """Gets a list of OHLCV data for the given pair and exchange.
 
         Args:
