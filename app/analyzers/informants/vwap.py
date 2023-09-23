@@ -39,7 +39,7 @@ class VWAP(IndicatorUtils):
             total_average_price = total_volume * (total_high + total_low) / 2
 
             vwap = total_average_price.sum() / total_volume.sum()
-            vwap_values["vwap"][index] = vwap
+            vwap_values.iloc[index, vwap_values.columns.get_loc("vwap")] = vwap
 
         vwap_values.dropna(how="all", inplace=True)
         return vwap_values

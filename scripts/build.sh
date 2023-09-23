@@ -1,1 +1,1 @@
-docker build -t dev/crypto-signals:latest
+docker build -t dev/crypto-signals:latest .

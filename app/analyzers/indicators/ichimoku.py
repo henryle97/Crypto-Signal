@@ -95,8 +95,11 @@ class Ichimoku(IndicatorUtils):
                 freq=timedelta,
                 periods=cloud_displacement,
             )
-            ichimoku_values = ichimoku_values.append(
-                pandas.DataFrame(index=newindex)
+            # ichimoku_values = ichimoku_values.append(
+            #     pandas.DataFrame(index=newindex)
+            # )
+            ichimoku_values = pandas.concat(
+                [ichimoku_values, pandas.DataFrame(index=newindex)], axis=0
             )
             # cloud offset
             ichimoku_values["leading_span_a"] = ichimoku_values[
