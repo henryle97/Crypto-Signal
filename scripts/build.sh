@@ -1,0 +1,1 @@
+docker build -t dev/crypto-signals:latest

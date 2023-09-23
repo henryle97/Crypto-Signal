@@ -1,0 +1,1 @@
+docker run --rm -ti -v $PWD/app:/app dev/crypto-signals:latest
