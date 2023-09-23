@@ -67,6 +67,11 @@ class Configuration:
         else:
             self.exchanges = dict()
 
+        if "strategy" in user_config:
+            self.strategies = user_config["strategy"]
+        else:
+            self.strategies = dict()
+
         for exchange in ccxt.exchanges:
             if exchange not in self.exchanges:
                 self.exchanges[exchange] = {"required": {"enabled": False}}
